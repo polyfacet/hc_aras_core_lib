@@ -118,6 +118,10 @@ Namespace BomCompare.OutputFormat
                         SetCellBgColor(changeType, True)
                     End If
                     'Wr.WriteElementString(prop.PropertyName, prop.Value)
+                    If prop.PropertyName = "item_number" Then
+                        Dim linkValue As String = String.Format("'{0}','{1}'", rowItem.TypeName, rowItem.Id)
+                        Wr.WriteAttributeString("link", linkValue)
+                    End If
                     Wr.WriteString(prop.Value)
                     Wr.WriteEndElement()
                 Next

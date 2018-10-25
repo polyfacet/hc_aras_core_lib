@@ -250,8 +250,10 @@ Namespace BomCompare
         End Function
 
         Private Function CreateAddBomCompareRow(ByVal indexValue As String, ByVal xmlElement As XmlElement) As BomCompareRow
+            Dim itemTypeName As String = xmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
+            Dim compareItemid As String = xmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim compareItem As New BomCompareItem
+            Dim compareItem As New BomCompareItem(itemTypeName, compareItemid)
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
@@ -288,9 +290,12 @@ Namespace BomCompare
 
 
         Private Function CreateUpdateBomCompareRow(ByVal indexValue As String, ByVal messages As List(Of String), ByVal compareXmlElement As XmlElement, ByVal baseXmlElement As XmlElement) As BomCompareRow
+            Dim itemTypeName As String = baseXmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
+            Dim compareItemid As String = compareXmlElement.SelectSingleNode("related_id/Item/id").InnerText
+            Dim baseItemid As String = baseXmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim compareItem As New BomCompareItem
-            Dim baseItem As New BomCompareItem
+            Dim compareItem As New BomCompareItem(itemTypeName, compareItemid)
+            Dim baseItem As New BomCompareItem(itemTypeName, baseItemid)
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
@@ -350,8 +355,10 @@ Namespace BomCompare
         End Function
 
         Private Function CreateRemovedBomCompareRow(ByVal indexValue As String, ByVal description As List(Of String), ByVal xmlElement As XmlElement) As BomCompareRow
+            Dim itemTypeName As String = xmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
+            Dim baseItemid As String = xmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim baseItem As New BomCompareItem
+            Dim baseItem As New BomCompareItem(itemTypeName, baseItemid)
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
