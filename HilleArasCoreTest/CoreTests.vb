@@ -85,4 +85,60 @@ RetryS:
         Next
         Return foundMessage
     End Function
+
+    <TestMethod>
+    Public Sub TestLogger()
+        Dim taskTimer As New Utils.Timer.TaskTimer()
+        'Dim logger As New MethodLogger(Inn, taskTimer)
+        Dim logger As Log.UserMethodLogger = Log.UserMethodLogger.GetLogger(Inn)
+        logger.Append("Connecting time", taskTimer.Restart)
+        logger.Append("Starting part 1")
+        Threading.Thread.Sleep(100)
+        logger.Append("End part 1", taskTimer.Restart)
+        'taskTimer.Restart()
+        logger.Append("Starting part 2")
+        Threading.Thread.Sleep(200)
+        logger.Append("End part 2", taskTimer.Restart)
+        logger.Append("Starting part 3")
+        Threading.Thread.Sleep(300)
+        logger.Append("End part 3", taskTimer.Restart)
+        logger.Append("TotalTime: " & taskTimer.GetTotalTimeInMs)
+
+    End Sub
+
+    <TestMethod>
+    Public Sub TestSharedLogger()
+        LogTest1()
+    End Sub
+
+    Private Sub LogTest1()
+        Dim taskTimer As New Utils.Timer.TaskTimer()
+        Dim logger As Log.UserMethodLogger = Log.UserMethodLogger.GetLogger(Inn)
+        logger.Append("Start running 1")
+        LogTest2()
+        logger.Append("Mid 1", taskTimer.Restart)
+        LogTest3()
+        logger.Append("End 1", taskTimer.GetTotalTimeInMs)
+        'logger.WriteBufferToFile()
+    End Sub
+
+
+    Private Sub LogTest2()
+        Dim taskTimer As New Utils.Timer.TaskTimer()
+        Dim logger As Log.UserMethodLogger = Log.UserMethodLogger.GetLogger(Inn)
+        logger.Append("Pausing")
+        Threading.Thread.Sleep(100)
+        logger.Append("Paused", taskTimer.Stop)
+        'logger.WriteBufferToFile()
+    End Sub
+
+    Private Sub LogTest3()
+        Dim taskTimer As New Utils.Timer.TaskTimer()
+        Dim luid As String = Guid.NewGuid.ToString
+        Dim logger As Log.UserMethodLogger = Log.UserMethodLogger.GetLogger(Inn, luid)
+        logger.Append("Resting")
+        Threading.Thread.Sleep(200)
+        logger.Append("Rested", taskTimer.Stop)
+        logger.WriteBufferToFile()
+    End Sub
 End Class

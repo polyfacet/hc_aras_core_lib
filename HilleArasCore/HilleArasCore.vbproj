@@ -87,8 +87,10 @@
     <Compile Include="Core\File.vb" />
     <Compile Include="Core\History\History.vb" />
     <Compile Include="Core\History\HistoryEvent.vb" />
-    <Compile Include="Core\Log\ILog.vb" />
-    <Compile Include="Core\Log\TempFileLogger.vb" />
+    <Compile Include="Core\Logging\ArasTempFileLogger.vb" />
+    <Compile Include="Core\Logging\ILog.vb" />
+    <Compile Include="Core\Logging\TempFileLogger.vb" />
+    <Compile Include="Core\Logging\UserMethodLogger.vb" />
     <Compile Include="Exceptions\ArasException.vb" />
     <Compile Include="Exceptions\ExceptionLogger\DefaultArasExceptionLogger.vb" />
     <Compile Include="Exceptions\ExceptionLogger\IArasExceptionLogger.vb" />
@@ -110,6 +112,7 @@
     </Compile>
     <Compile Include="Utils\Timer\TaskResult.vb" />
     <Compile Include="Utils\Timer\TaskTimer.vb" />
+    <Compile Include="Wrapper\ArasMethodWrapper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
