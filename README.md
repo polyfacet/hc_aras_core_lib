@@ -2,3 +2,4 @@
 Aras Core Extension
 
 Generic server extension functions for Aras Innovator
+* Include logging
