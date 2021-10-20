@@ -1,4 +1,4 @@
-﻿Namespace BomCompare
+Namespace BomCompare
     Public Class RelationshipProperty
         Inherits BaseProperty
 

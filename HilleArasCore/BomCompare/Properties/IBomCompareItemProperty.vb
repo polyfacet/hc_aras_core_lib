@@ -1,4 +1,4 @@
-﻿Namespace BomCompare
+Namespace BomCompare
     Public Interface IBomCompareItemProperty
 
         ReadOnly Property PropertyName As String

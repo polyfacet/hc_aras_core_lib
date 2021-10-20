@@ -1,12 +1,12 @@
-﻿Public Class XmlOutputFactory
+Public Class XmlOutputFactory
 
     Public Shared Function GetImplemenation(name As String) As IXmlOutput
-        ' TODO: Implement to support different implementations
+        ' TODO: This could be improved, without the hardcoding of "ECO"
         Dim xmlOutput As IXmlOutput = Nothing
 
         Select Case name
             Case "ECO"
-                ' TODO: Implement for ECO context
+                xmlOutput = New EcoXmlOutput
         End Select
 
         If xmlOutput Is Nothing Then

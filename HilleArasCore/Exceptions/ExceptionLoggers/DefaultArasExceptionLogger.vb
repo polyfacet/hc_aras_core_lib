@@ -1,5 +1,6 @@
-﻿Imports Aras.IOM
+Imports Aras.IOM
 Imports System.Text
+Imports Mycronic.Aras.Core
 
 Public Class DefaultArasExceptionLogger
     Implements IArasExceptionLogger
@@ -50,11 +51,14 @@ Public Class DefaultArasExceptionLogger
     End Property
 
     Private Shared Function GetLogDir(ByVal inn As Innovator) As String
-        Dim logDir As String = GetBaseLogDir()
+        Dim logDir As String = IO.Path.GetTempPath
+
+        logDir = IO.Path.Combine(logDir, "MyArasExceptions")
 
         If Not inn Is Nothing Then
             logDir &= "\" & inn.getConnection.GetDatabaseName()
         End If
+
 
         If Not IO.Directory.Exists(logDir) Then
             IO.Directory.CreateDirectory(logDir)
@@ -62,16 +66,11 @@ Public Class DefaultArasExceptionLogger
         Return logDir
     End Function
 
-    Private Shared Function GetBaseLogDir() As String
-        Dim logDir As String = InnovatorBase.GetArasTempDir
-
-        logDir = IO.Path.Combine(logDir, "ArasExceptions")
-        Return logDir
-    End Function
-
     Public Sub Log(inn As Innovator, method As String, message As String, innerException As Exception) Implements IArasExceptionLogger.Log
         Dim fileLogMessage As String
+        'Dim logItem As Item = Nothing
         Me.Inn = inn
+
 
         Dim userId As String = "N/A"
         Dim userLogin As String = "N/A"
@@ -96,7 +95,6 @@ Public Class DefaultArasExceptionLogger
 
         AppendProperty("message", message)
 
-
         If Not innerException Is Nothing Then
             AppendProperty("inner_exception", DateTime.Now.ToString(DATE_FORMAT) & vbCrLf & innerException.ToString)
         Else
@@ -104,11 +102,21 @@ Public Class DefaultArasExceptionLogger
         End If
 
         SB.AppendLine("*********END Exception*********")
+
+        AppendProperties()
+
         fileLogMessage = SB.ToString
+
 
         LogToFile(inn, fileLogMessage)
         If Not LogItem Is Nothing Then
             LogToXmlFile(inn, LogItem)
+            ' Cant apply since the exception will rollback it anyway :)
+
+            'Dim result As Item = logItem.apply()
+            'If result.isError Then
+            '    LogToFile(inn, result.getErrorString)
+            'End If
         End If
 
 
@@ -137,6 +145,10 @@ Public Class DefaultArasExceptionLogger
 
     End Sub
 
+    Protected Overridable Sub AppendProperties()
+
+    End Sub
+
     Protected Sub AppendProperty(propertyName As String, propertyValue As String)
         SB.AppendLine(propertyName & ": " & propertyValue)
         If Not LogItem Is Nothing Then
@@ -146,8 +158,9 @@ Public Class DefaultArasExceptionLogger
 
 
     Private Sub LogToFile(inn As Innovator, logMessage As String)
-        Dim logDir As String = GetLogDir(inn)
 
+        Dim logDir As String = IO.Path.GetTempPath
+        logDir &= "\MyArasExceptions\"
         If Not IO.Directory.Exists(logDir) Then
             IO.Directory.CreateDirectory(logDir)
         End If
@@ -157,12 +170,18 @@ Public Class DefaultArasExceptionLogger
         Using sw As New IO.StreamWriter(filePath, True)
             sw.WriteLine(logMessage)
         End Using
+
+
     End Sub
 
     Private Sub LogToXmlFile(inn As Innovator, ByVal item As Item)
+
+        ' TODO:Implement to get the property of where to save the logfiles
+
         Dim id As String = item.dom.GetElementsByTagName("Item")(0).Attributes.GetNamedItem("id").Value
-        Dim filePath As String = IO.Path.Combine(LogDir, id & ".xml")
+        Dim filePath As String = IO.Path.Combine(logDir, id & ".xml")
         item.dom.Save(filePath)
+
     End Sub
 
 End Class

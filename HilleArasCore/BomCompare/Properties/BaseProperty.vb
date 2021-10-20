@@ -1,4 +1,4 @@
-﻿Namespace BomCompare
+Namespace BomCompare
     Public MustInherit Class BaseProperty
         Implements IBomCompareItemProperty
 

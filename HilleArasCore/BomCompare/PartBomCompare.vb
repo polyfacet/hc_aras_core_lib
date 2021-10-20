@@ -1,4 +1,4 @@
-﻿Imports Aras.IOM
+Imports Aras.IOM
 Imports System.Text
 Imports System.Xml
 
@@ -42,7 +42,7 @@ Namespace BomCompare
             End Get
         End Property
 
-        ' Make it possible to use other item type than the Part realationship. e.g. Document
+        ' Make it possible to use other than the Part item type
         Private itemTypeNameField As String = "Part"
         Public Property ItemTypeName As String
             Get
@@ -53,7 +53,7 @@ Namespace BomCompare
             End Set
         End Property
 
-        ' Make it possible to use other relationship than the Part BOM realationship. e.g. Part Document
+        ' Make it possible to use other relationship than the Part BOM realation ship. e.g. MY Part BOM Config
         Private relationshipNameField As String = "Part BOM"
         Public Property RelationshipName As String
             Get
@@ -87,12 +87,11 @@ Namespace BomCompare
 
         Public Function GetResultAsXml(ByVal outputImpl As IXmlOutput) As XmlDocument
 
-            ' Get specific implementation 
+            ' Get specific implementation
             Dim output As IXmlOutput = outputImpl
             Return output.GetResult(Me.CompareItem, Me.BaseItem, Me.BomCompareProperties, Me.BomCompareRows)
 
         End Function
-
 
         Public Function Compare(ByVal comparePartId As String, ByVal basePartId As String, ByVal compareProperty As IBomCompareItemProperty) As List(Of String)
             Me.CompareProperty = compareProperty
@@ -167,8 +166,10 @@ Namespace BomCompare
                                 baseValue = If((Not element Is Nothing), element.InnerText, String.Empty)
                             Else
                                 ' Check component
-                                compareValue = partBomXmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName).InnerText
-                                baseValue = partBomBaseXmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName).InnerText
+                                Dim element As XmlElement = partBomXmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName)
+                                compareValue = If((Not element Is Nothing), element.InnerText, String.Empty)
+                                element = partBomBaseXmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName)
+                                baseValue = If((Not element Is Nothing), element.InnerText, String.Empty)
                             End If
 
                             If compareValue <> baseValue Then
@@ -250,10 +251,8 @@ Namespace BomCompare
         End Function
 
         Private Function CreateAddBomCompareRow(ByVal indexValue As String, ByVal xmlElement As XmlElement) As BomCompareRow
-            Dim itemTypeName As String = xmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
-            Dim compareItemid As String = xmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim compareItem As New BomCompareItem(itemTypeName, compareItemid)
+            Dim compareItem As New BomCompareItem
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
@@ -268,12 +267,7 @@ Namespace BomCompare
                         newProp = New NonRelProperty(prop.PropertyName, prop.PropertyLabel)
                         propElement = xmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName)
                     End If
-
-                    If Not propElement Is Nothing Then
-                        newProp.Value = propElement.InnerText
-                    Else
-                        newProp.Value = String.Empty
-                    End If
+                    newProp.Value = GetValueFromElement(prop, propElement)
 
                     compareItem.BomCompareItemProperties.Add(newProp)
                 End If
@@ -288,14 +282,19 @@ Namespace BomCompare
             Return bomCompareRow
         End Function
 
+        Private Function GetValueFromElement(prop As IBomCompareItemProperty, propElement As XmlElement) As String
+            If propElement Is Nothing Then Return String.Empty
+            Dim value As String = propElement.InnerText
+            If TypeOf prop Is IBooleanBomCompareItemProperty Then
+                value = CType(prop, IBooleanBomCompareItemProperty).TranslateBooleanStringValue(value)
+            End If
+            Return value
+        End Function
 
         Private Function CreateUpdateBomCompareRow(ByVal indexValue As String, ByVal messages As List(Of String), ByVal compareXmlElement As XmlElement, ByVal baseXmlElement As XmlElement) As BomCompareRow
-            Dim itemTypeName As String = baseXmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
-            Dim compareItemid As String = compareXmlElement.SelectSingleNode("related_id/Item/id").InnerText
-            Dim baseItemid As String = baseXmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim compareItem As New BomCompareItem(itemTypeName, compareItemid)
-            Dim baseItem As New BomCompareItem(itemTypeName, baseItemid)
+            Dim compareItem As New BomCompareItem
+            Dim baseItem As New BomCompareItem
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
@@ -317,17 +316,8 @@ Namespace BomCompare
                         propElementBase = baseXmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName)
                     End If
 
-                    If Not propElement Is Nothing Then
-                        newProp.Value = propElement.InnerText
-                    Else
-                        newProp.Value = String.Empty
-                    End If
-
-                    If Not propElementBase Is Nothing Then
-                        newPropBase.Value = propElementBase.InnerText
-                    Else
-                        newPropBase.Value = String.Empty
-                    End If
+                    newProp.Value = GetValueFromElement(prop, propElement)
+                    newPropBase.Value = GetValueFromElement(prop, propElementBase)
 
                     If newProp.Value <> newPropBase.Value Then
                         newProp.Changed = True
@@ -355,10 +345,8 @@ Namespace BomCompare
         End Function
 
         Private Function CreateRemovedBomCompareRow(ByVal indexValue As String, ByVal description As List(Of String), ByVal xmlElement As XmlElement) As BomCompareRow
-            Dim itemTypeName As String = xmlElement.SelectSingleNode("related_id/Item").Attributes.GetNamedItem("type").Value
-            Dim baseItemid As String = xmlElement.SelectSingleNode("related_id/Item/id").InnerText
 
-            Dim baseItem As New BomCompareItem(itemTypeName, baseItemid)
+            Dim baseItem As New BomCompareItem
 
             ' Create new instances of the properties
             For Each prop As IBomCompareItemProperty In Me.BomCompareProperties
@@ -373,12 +361,8 @@ Namespace BomCompare
                         newProp = New NonRelProperty(prop.PropertyName, prop.PropertyLabel)
                         propElement = xmlElement.SelectSingleNode("related_id/Item").Item(prop.PropertyName)
                     End If
+                    newProp.Value = GetValueFromElement(prop, propElement)
 
-                    If Not propElement Is Nothing Then
-                        newProp.Value = propElement.InnerText
-                    Else
-                        newProp.Value = String.Empty
-                    End If
 
                     baseItem.BomCompareItemProperties.Add(newProp)
                 End If

@@ -44,9 +44,12 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IOM, Version=11.0.0.6920, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
+    <Reference Include="Aras.Server.Core, Version=12.0.0.22759, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Aras\HCAras12SP9\Innovator\Server\bin\IOM.dll</HintPath>
+      <HintPath>..\..\References\ArasR12SP9\Aras.Server.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IOM">
+      <HintPath>..\..\References\ArasR12SP9\SDK\IOM.dll</HintPath>
     </Reference>
     <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="System" />
@@ -70,32 +73,48 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArasValidations\ArasValidation.vb" />
     <Compile Include="Authentication\Authenticator.vb" />
     <Compile Include="BomCompare\BomCompareItem.vb" />
     <Compile Include="BomCompare\BomCompareRow.vb" />
     <Compile Include="BomCompare\OutputFormats\Impl\DefaultOutputColors.vb" />
     <Compile Include="BomCompare\OutputFormats\Impl\DefaultOutputSettings.vb" />
     <Compile Include="BomCompare\OutputFormats\Impl\DefaultXmlOutput.vb" />
+    <Compile Include="BomCompare\OutputFormats\Impl\EcoXmlOutput.vb" />
     <Compile Include="BomCompare\OutputFormats\Impl\XmlOutputFactory.vb" />
     <Compile Include="BomCompare\OutputFormats\IOutputColors.vb" />
     <Compile Include="BomCompare\OutputFormats\IOutputSettings.vb" />
     <Compile Include="BomCompare\OutputFormats\IXmlOutput.vb" />
     <Compile Include="BomCompare\PartBomCompare.vb" />
     <Compile Include="BomCompare\Properties\BaseProperty.vb" />
+    <Compile Include="BomCompare\Properties\BooleanNonRelProperty.vb" />
+    <Compile Include="BomCompare\Properties\BooleanRelationshipProperty.vb" />
     <Compile Include="BomCompare\Properties\IBomCompareItemProperty.vb" />
+    <Compile Include="BomCompare\Properties\IBooleanBomCompareItemProperty.vb" />
     <Compile Include="BomCompare\Properties\NonRelProperty.vb" />
     <Compile Include="BomCompare\Properties\RelationshipProperty.vb" />
+    <Compile Include="BooleanUtils.vb" />
+    <Compile Include="Configurations\HcArasProperty.vb" />
+    <Compile Include="Core\Access\TeamAccess.vb" />
     <Compile Include="Core\Email.vb" />
     <Compile Include="Core\File.vb" />
     <Compile Include="Core\History\History.vb" />
     <Compile Include="Core\History\HistoryEvent.vb" />
+    <Compile Include="Core\ItemExt.vb" />
     <Compile Include="Core\Logging\ArasTempFileLogger.vb" />
     <Compile Include="Core\Logging\ILog.vb" />
     <Compile Include="Core\Logging\TempFileLogger.vb" />
     <Compile Include="Core\Logging\UserMethodLogger.vb" />
+    <Compile Include="Core\Log\ILog.vb" />
+    <Compile Include="Core\Log\TempFileLogger.vb" />
+    <Compile Include="Core\User.vb" />
+    <Compile Include="Core\Utils.vb" />
+    <Compile Include="Core\Workflow\ActivityExt.vb" />
+    <Compile Include="Core\Workflow\Assignees.vb" />
     <Compile Include="Exceptions\ArasException.vb" />
-    <Compile Include="Exceptions\ExceptionLogger\DefaultArasExceptionLogger.vb" />
-    <Compile Include="Exceptions\ExceptionLogger\IArasExceptionLogger.vb" />
+    <Compile Include="Exceptions\ExceptionLoggers\ArasItemExceptionLogger.vb" />
+    <Compile Include="Exceptions\ExceptionLoggers\DefaultArasExceptionLogger.vb" />
+    <Compile Include="Exceptions\ExceptionLoggers\IArasExceptionLogger.vb" />
     <Compile Include="InnovatorBase.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

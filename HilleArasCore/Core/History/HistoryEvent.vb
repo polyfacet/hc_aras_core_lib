@@ -1,8 +1,9 @@
-﻿Imports Aras.IOM
+Imports Aras.IOM
 
 Public Class HistoryEvent
 
     Public ReadOnly Property [When] As Date
+    Public ReadOnly Property CreatedOn As String
     Public ReadOnly Property WhoName As String
     Public ReadOnly Property WhoId As String
     Public ReadOnly Property Action As String
@@ -14,6 +15,7 @@ Public Class HistoryEvent
 
     Public Sub New(historyItem As Item)
         Me.When = CDate(historyItem.getProperty("created_on"))
+        Me.CreatedOn = historyItem.getProperty("created_on")
         Me.WhoName = historyItem.getPropertyAttribute("created_by_id", "keyed_name", "N/A")
         Me.WhoId = historyItem.getProperty("created_by_id", "N/A")
         Me.Action = historyItem.getProperty("action", "N/A")

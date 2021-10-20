@@ -1,4 +1,4 @@
-﻿Namespace BomCompare.OutputFormat
+Namespace BomCompare.OutputFormat
 
     Public Class DefaultOutputColors
         Implements IOutputColors

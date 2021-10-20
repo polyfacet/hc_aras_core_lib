@@ -1,4 +1,4 @@
-﻿Imports Aras.IOM
+Imports Aras.IOM
 Imports System.Text
 Imports System.Xml
 
@@ -7,6 +7,7 @@ Namespace BomCompare.OutputFormat
     Public Class DefaultXmlOutput
         Implements IXmlOutput
 
+        Private Const ID As String = "id"
         Private Const ITEM_NUMBER As String = "item_number"
         Private Const MAJOR_REV As String = "major_rev"
         Private Const GENERATION As String = "generation"
@@ -14,6 +15,7 @@ Namespace BomCompare.OutputFormat
         Private Property Wr As XmlWriter
         Private Property BomCompareProperties As List(Of IBomCompareItemProperty)
         Public Property OutputSettings As IOutputSettings Implements IXmlOutput.OutputSettings
+        Private Property BaseItem As Item
 
         Public ReadOnly Property Name As String Implements IXmlOutput.Name
             Get
@@ -26,6 +28,7 @@ Namespace BomCompare.OutputFormat
         'End Sub
 
         Public Function GetResult(ByVal compareItem As Item, ByVal baseItem As Item, ByVal bomCompareProperties As List(Of IBomCompareItemProperty), ByVal bomCompareRows As List(Of BomCompareRow)) As XmlDocument Implements IXmlOutput.GetResult
+            Me.BaseItem = baseItem
             Me.BomCompareProperties = bomCompareProperties
             Dim settings As XmlWriterSettings = New XmlWriterSettings()
             settings.Indent = True
@@ -118,10 +121,15 @@ Namespace BomCompare.OutputFormat
                         SetCellBgColor(changeType, True)
                     End If
                     'Wr.WriteElementString(prop.PropertyName, prop.Value)
-                    If prop.PropertyName = "item_number" Then
-                        Dim linkValue As String = String.Format("'{0}','{1}'", rowItem.TypeName, rowItem.Id)
-                        Wr.WriteAttributeString("link", linkValue)
+
+                    If (prop.PropertyName Is "item_number") Then
+                        For Each prop2 As IBomCompareItemProperty In rowItem.BomCompareItemProperties
+                            If (prop2.PropertyName Is "id") Then
+                                Wr.WriteAttributeString("link", "'" & OutputSettings.ContentItemType & "','" + prop2.Value + "'")
+                            End If
+                        Next
                     End If
+
                     Wr.WriteString(prop.Value)
                     Wr.WriteEndElement()
                 Next
