@@ -12,7 +12,7 @@ Public Class CoreTests
     Private ReadOnly Property Inn As Innovator
         Get
             If innField Is Nothing Then
-                innField = New Connection().GetInnovator
+                innField = InnovatorBase.getInnovator
             End If
             Return innField
         End Get

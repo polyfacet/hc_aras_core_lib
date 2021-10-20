@@ -44,17 +44,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aras.Diagnostics, Version=11.0.0.6549, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Aras11SP12\Aras.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="Aras.Net, Version=11.0.0.6549, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Aras11SP12\Aras.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="IOM, Version=11.0.0.6920, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Aras\HCAras12SP9\Innovator\Server\bin\IOM.dll</HintPath>
+    <Reference Include="IOM">
+      <HintPath>..\..\References\ArasR12SP9\SDK\IOM.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
@@ -80,7 +71,6 @@
   <ItemGroup>
     <Compile Include="BomCompareTests.vb" />
     <Compile Include="CoreTests.vb" />
-    <Compile Include="InnovatorBase\Connection.vb" />
     <Compile Include="InnovatorBase\InnovatorBase.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -109,6 +99,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

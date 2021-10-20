@@ -14,7 +14,7 @@ Public Class BomCompareTests
     Private ReadOnly Property Inn As Innovator
         Get
             If innField Is Nothing Then
-                innField = New Connection().GetInnovator
+                innField = InnovatorBase.getInnovator()
             End If
             Return innField
         End Get
@@ -62,8 +62,8 @@ Public Class BomCompareTests
         Console.WriteLine("Tot time actual work: " & timer.GetTotalTimeInMs)
         For Each row As BomCompare.BomCompareRow In comp.BomCompareRows
             Console.WriteLine(row.ChangeType.ToString)
-            If Not row.BaseItem Is Nothing Then Console.WriteLine("row.BaseItem =  " & row.BaseItem.TypeName & " : " & row.BaseItem.Id)
-            If Not row.CompareItem Is Nothing Then Console.WriteLine("row.CompareItem =  " & row.CompareItem.TypeName & " : " & row.CompareItem.Id)
+            'If Not row.BaseItem Is Nothing Then Console.WriteLine("row.BaseItem =  " & row.BaseItem.TypeName & " : " & row.BaseItem.Id)
+            'If Not row.CompareItem Is Nothing Then Console.WriteLine("row.CompareItem =  " & row.CompareItem.TypeName & " : " & row.CompareItem.Id)
             For Each desc As String In row.ChangeDescription
                 Console.WriteLine(desc)
             Next

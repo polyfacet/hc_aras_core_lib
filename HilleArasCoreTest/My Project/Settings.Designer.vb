@@ -53,6 +53,54 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://localhost/dev")>  _
+        Public Property ARAS_URL() As String
+            Get
+                Return CType(Me("ARAS_URL"),String)
+            End Get
+            Set
+                Me("ARAS_URL") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("DevR12SP9")>  _
+        Public Property ARAS_DB() As String
+            Get
+                Return CType(Me("ARAS_DB"),String)
+            End Get
+            Set
+                Me("ARAS_DB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("admin")>  _
+        Public Property ARAS_USER() As String
+            Get
+                Return CType(Me("ARAS_USER"),String)
+            End Get
+            Set
+                Me("ARAS_USER") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("innovator")>  _
+        Public Property ARAS_PASSWORD() As String
+            Get
+                Return CType(Me("ARAS_PASSWORD"),String)
+            End Get
+            Set
+                Me("ARAS_PASSWORD") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
