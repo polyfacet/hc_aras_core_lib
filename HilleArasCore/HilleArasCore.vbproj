@@ -1,143 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4712DDB2-67CE-48BD-B688-83E37CE1B061}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Hille.Aras.Core</RootNamespace>
     <AssemblyName>Hille.Aras.Core</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <MyType>Empty</MyType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Hille.Aras.Core.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Hille.Aras.Core.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aras.Server.Core, Version=12.0.0.22759, Culture=neutral, PublicKeyToken=524d880b05474146, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\References\ArasR12SP9\Aras.Server.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IOM">
-      <HintPath>..\..\References\ArasR12SP9\SDK\IOM.dll</HintPath>
-    </Reference>
-    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
+    <Compile Remove="Authentication\**" />
+    <Compile Remove="Core\Log\**" />
+    <EmbeddedResource Remove="Authentication\**" />
+    <EmbeddedResource Remove="Core\Log\**" />
+    <None Remove="Authentication\**" />
+    <None Remove="Core\Log\**" />
   </ItemGroup>
   <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ArasValidations\ArasValidation.vb" />
-    <Compile Include="Authentication\Authenticator.vb" />
-    <Compile Include="BomCompare\BomCompareItem.vb" />
-    <Compile Include="BomCompare\BomCompareRow.vb" />
-    <Compile Include="BomCompare\OutputFormats\Impl\DefaultOutputColors.vb" />
-    <Compile Include="BomCompare\OutputFormats\Impl\DefaultOutputSettings.vb" />
-    <Compile Include="BomCompare\OutputFormats\Impl\DefaultXmlOutput.vb" />
-    <Compile Include="BomCompare\OutputFormats\Impl\EcoXmlOutput.vb" />
-    <Compile Include="BomCompare\OutputFormats\Impl\XmlOutputFactory.vb" />
-    <Compile Include="BomCompare\OutputFormats\IOutputColors.vb" />
-    <Compile Include="BomCompare\OutputFormats\IOutputSettings.vb" />
-    <Compile Include="BomCompare\OutputFormats\IXmlOutput.vb" />
-    <Compile Include="BomCompare\PartBomCompare.vb" />
-    <Compile Include="BomCompare\Properties\BaseProperty.vb" />
-    <Compile Include="BomCompare\Properties\BooleanNonRelProperty.vb" />
-    <Compile Include="BomCompare\Properties\BooleanRelationshipProperty.vb" />
-    <Compile Include="BomCompare\Properties\IBomCompareItemProperty.vb" />
-    <Compile Include="BomCompare\Properties\IBooleanBomCompareItemProperty.vb" />
-    <Compile Include="BomCompare\Properties\NonRelProperty.vb" />
-    <Compile Include="BomCompare\Properties\RelationshipProperty.vb" />
-    <Compile Include="BooleanUtils.vb" />
-    <Compile Include="Configurations\HcArasProperty.vb" />
-    <Compile Include="Core\Access\TeamAccess.vb" />
-    <Compile Include="Core\Email.vb" />
-    <Compile Include="Core\File.vb" />
-    <Compile Include="Core\History\History.vb" />
-    <Compile Include="Core\History\HistoryEvent.vb" />
-    <Compile Include="Core\ItemExt.vb" />
-    <Compile Include="Core\Logging\ArasTempFileLogger.vb" />
-    <Compile Include="Core\Logging\ILog.vb" />
-    <Compile Include="Core\Logging\TempFileLogger.vb" />
-    <Compile Include="Core\Logging\UserMethodLogger.vb" />
-    <Compile Include="Core\Log\ILog.vb" />
-    <Compile Include="Core\Log\TempFileLogger.vb" />
-    <Compile Include="Core\User.vb" />
-    <Compile Include="Core\Utils.vb" />
-    <Compile Include="Core\Workflow\ActivityExt.vb" />
-    <Compile Include="Core\Workflow\Assignees.vb" />
-    <Compile Include="Exceptions\ArasException.vb" />
-    <Compile Include="Exceptions\ExceptionLoggers\ArasItemExceptionLogger.vb" />
-    <Compile Include="Exceptions\ExceptionLoggers\DefaultArasExceptionLogger.vb" />
-    <Compile Include="Exceptions\ExceptionLoggers\IArasExceptionLogger.vb" />
-    <Compile Include="InnovatorBase.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
+    <Compile Update="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Update="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
+    <Compile Update="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Utils\Timer\TaskResult.vb" />
-    <Compile Include="Utils\Timer\TaskTimer.vb" />
-    <Compile Include="Wrapper\ArasMethodWrapper.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
+    <EmbeddedResource Update="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -145,23 +52,39 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="My Project\Application.myapp">
+    <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-    <None Include="My Project\Settings.settings">
+    <None Update="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Pdmp\Impl\DefaultTransitionParser.vb" />
+    <Compile Remove="Pdmp\ItransitionParser.vb" />
+    <Compile Remove="Pdmp\Query\PdmpQueries.vb" />
+    <Compile Remove="Pdmp\Transition.vb" />
+    <Compile Remove="Pdmp\TransitionRules.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Aras.Server.Core">
+      <HintPath>..\..\References\ArasR2023\Aras.Server.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IOM">
+      <HintPath>..\..\References\ArasR2023\IOM.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

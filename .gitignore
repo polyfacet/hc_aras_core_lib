@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 References/
 HilleArasCoreTest/InnovatorBase/Connection.vb
+upgrade-assistant.clef
+UpgradeReport.sarif

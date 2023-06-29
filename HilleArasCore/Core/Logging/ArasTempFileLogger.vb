@@ -34,7 +34,7 @@ Namespace Log
         End Property
 
         Private Function GetLogDir() As String
-            Dim dir As String = IO.Path.GetTempPath & "\" & My.Application.Info.AssemblyName
+            Dim dir As String = IO.Path.GetTempPath & "\" & System.Reflection.Assembly.GetExecutingAssembly.GetName.FullName
             If Not IO.Directory.Exists(dir) Then
                 IO.Directory.CreateDirectory(dir)
             End If

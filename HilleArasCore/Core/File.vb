@@ -76,7 +76,7 @@ Namespace Files
         End Function
 
         Private Function GetLocalVaultPath() As String
-            Dim applicationPath As String = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath
+            Dim applicationPath As String = AppDomain.CurrentDomain.BaseDirectory
             Dim di As DirectoryInfo = New DirectoryInfo(applicationPath)
             ' R11 Dim dir As String = di.Parent.Parent.FullName
             Dim dir As String = Path.Combine(di.Parent.Parent.FullName, "VaultServer/")
