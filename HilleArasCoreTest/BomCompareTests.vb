@@ -8,7 +8,7 @@ Imports System.Xml
 <TestClass>
 Public Class BomCompareTests
 
-    Private Const PART_ITEM_NUMBER = "1040"
+    Private Const PART_ITEM_NUMBER = "P-1003"
 
     Private innField As Innovator
     Private ReadOnly Property Inn As Innovator
